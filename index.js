@@ -59,7 +59,7 @@ app.post("/api/database/credentials/saveData", (req, res) => {
 app.post("/api/database/credentials/verifyData", async (req, res) => {
   const data = await User.findOne({ username: req.body.username })
   if(data){
-  const key = data.password
+  const key = data.password;
       const flag = await bcrypt.compare(req.body.password, key);
       if (flag == false) {
         res.json({
