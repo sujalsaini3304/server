@@ -34,8 +34,8 @@ app.use(bodyParser.json());
 // Routes
 app.get("/", (req, res) => {
   ejs.renderFile("./static/index.html", {}, {}, (err, template) => {
-    if (err) {
-      throw err;
+    if (error) {
+      throw error;
     } else {
       res.end(template);
     }
