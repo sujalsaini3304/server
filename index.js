@@ -33,13 +33,7 @@ app.use(bodyParser.json());
 
 // Routes
 app.get("/", (req, res) => {
-  ejs.renderFile("./static/index.html", {}, {}, (err, template) => {
-    if (error) {
-      throw error;
-    } else {
-      res.end(template);
-    }
-  });
+   res.send("Server is ready.")
 });
 
 
