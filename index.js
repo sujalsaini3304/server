@@ -4,6 +4,7 @@ import User from "./db.modules.js";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import bcrypt from "bcryptjs";
+import ejs from "ejs";
 
 dotenv.config({
   path: ".env",
@@ -12,7 +13,8 @@ dotenv.config({
 // Connection to MongoDBdatabase.
 const conn = mongoose.connect(`${process.env.MONGODB_URL}`, {
   dbName: "database",
-  useNewUrlParser: true, useUnifiedTopology: true 
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 conn.then(() => {
   console.log("Connected to database.");
@@ -31,8 +33,15 @@ app.use(bodyParser.json());
 
 // Routes
 app.get("/", (req, res) => {
-  res.send("Server is ready.");
+  ejs.renderFile("./static/index.html", {}, {}, (err, template) => {
+    if (err) {
+      throw err;
+    } else {
+      res.end(template);
+    }
+  });
 });
+
 
 // Saving credentials
 app.post("/api/database/credentials/saveData", (req, res) => {
@@ -54,35 +63,30 @@ app.post("/api/database/credentials/saveData", (req, res) => {
     });
 });
 
-
-
 // Verify credentials
 app.post("/api/database/credentials/verifyData", async (req, res) => {
-  const data = await User.findOne({ username: req.body.username })
-  if(data){
-  const key = data.password;
-      const flag = await bcrypt.compare(req.body.password, key);
-      if (flag == false) {
-        res.json({
-          message: "Verify failed",
-          status: 0,
-        });
-      } else {
-        res.json({
-          message: "Verified",
-          status: 1,
-        });
-      }
+  const data = await User.findOne({ username: req.body.username });
+  if (data) {
+    const key = data.password;
+    const flag = await bcrypt.compare(req.body.password, key);
+    if (flag == false) {
+      res.json({
+        message: "Verify failed",
+        status: 0,
+      });
+    } else {
+      res.json({
+        message: "Verified",
+        status: 1,
+      });
     }
-    else{
-        res.json({
-            message: "Verify failed",
-            status: 0,
-          });
-    }
+  } else {
+    res.json({
+      message: "Verify failed",
+      status: 0,
+    });
+  }
 });
-
-
 
 // Listen on the defined port
 app.listen(PORT, (req, res) => {
