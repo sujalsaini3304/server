@@ -4,7 +4,7 @@ import User from "./db.modules.js";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import bcrypt from "bcryptjs";
-import ejs from "ejs";
+
 
 dotenv.config({
   path: ".env",
