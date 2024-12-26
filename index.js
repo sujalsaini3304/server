@@ -15,17 +15,9 @@ const conn = mongoose.connect(`${process.env.MONGODB_URL}`, {
 });
 conn.then(() => {
   console.log("Connected to database.");
-  res.json({
-    message: "Connected to database.",
-    status: 0,
-  });
 });
 conn.catch(() => {
   console.log("Connection failed to database.");
-  res.json({
-    message: "Connection failed to database.",
-    status: 0,
-  });
 });
 
 //Creating instance app
