@@ -12,6 +12,7 @@ dotenv.config({
 // Connection to MongoDBdatabase.
 const conn = mongoose.connect(`${process.env.MONGODB_URL}`, {
   dbName: "database",
+  useNewUrlParser: true, useUnifiedTopology: true 
 });
 conn.then(() => {
   console.log("Connected to database.");
