@@ -9,7 +9,7 @@ dotenv.config({
   path: ".env",
 });
 
-// Connection to MongoDBdatabase 
+// Connection to MongoDBdatabase.
 const conn = mongoose.connect(`${process.env.MONGODB_URL}`, {
   dbName: "database",
 });
