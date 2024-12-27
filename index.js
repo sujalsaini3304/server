@@ -15,8 +15,6 @@ dotenv.config({
 // Connection to MongoDBdatabase.
 const conn = mongoose.connect(`${process.env.MONGODB_URL}`, {
   dbName: "database",
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
 });
 conn.then(() => {
   console.log("Connected to database.");
@@ -51,7 +49,8 @@ app.post("/api/database/credentials/saveData", (req, res) => {
         status: 1,
       });
     })
-    .catch(() => {
+    .catch((e) => {
+      console.log(e);
       res.json({
         message: "Failed to save data",
         status: 0,
